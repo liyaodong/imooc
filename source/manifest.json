@@ -1,10 +1,8 @@
 {
-	"name": "URL2QR",
+	"name": "超图imooc快进",
 	"version": "1.0",
 	"manifest_version": 2,
-	"description": "将当前URL的地址转成二维码",
-  "author": "Vanilla",
-  "homepage_url": "http://liyaodong.com",
+	"description": "用于快速完成网上公选课，仅作学习交流使用",
 	"icons": {
     "16": "icon.png",
     "48": "icon.png",

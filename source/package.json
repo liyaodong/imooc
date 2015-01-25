@@ -1,8 +1,7 @@
 {
-  "name": "URL2QR",
+  "name": "超图imooc视频快进",
   "version": "1.0.0",
-  "description": "Generate QR code from now URL 。",
-  "author": "GeekPark",
+  "description": "仅作学习交流使用",
   "dependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.5.0",
