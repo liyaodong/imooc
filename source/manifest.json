@@ -9,9 +9,13 @@
     "128": "icon.png"
   },
   "permissions": [
-    "notifications",
-    "tabs",
     "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*.chaoxing.com/*"],
+      "js": ["dist/main.min.js"]
+    }
   ],
   "options_page": "options.html"
 }
