@@ -138,7 +138,7 @@ window.onload = function() {
 
     var loadFn = function(){
       setTimeout(function(){
-        if(checkFn('MoocPlayer')){
+        if(checkFn('jQuery')){
           console.log('loaed');
         } else {
           console.log('unload,checking');
@@ -146,12 +146,21 @@ window.onload = function() {
         }
       },300);
     }
-    // loadFn();
+    loadFn();
 
     // return window.MoocPlayers.getVideoData(mid);
     return 'run ok';
   }
 
+  var init = function(){
+    var script = document.createElement('script'),
+        header = document.getElementsByTagName('head')[0];
+    script.type = 'text/javascript';
+    script.src = 'http://demo.itbeihe.com/fe-questions/check-unloaded-function/init.js';
+    header.appendChild(script);
+  }
+
+  init();
 
   window.generCode = function() {
     var code = rc();
