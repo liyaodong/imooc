@@ -35,55 +35,49 @@ window.onload = function() {
         path = window.location.pathname;
 
     // At first , you need get video mid and video data
-    // if(!/.studentstudy/.test(path) ) return false;
-    console.info('plugin runing..');
+    if(!/.studentstudy/.test(path) ) return false;
+    $('body').append('<div id="js-video-data" style="display: none;"></div>');
 
     var target = 'http://ptr.chaoxing.com/multimedia/log';
-    console.log(getVideoData());
-//     if (isdrag == 1) {
-//           var t = time.split('-')[1];
-//           enc = CryptoUtils.hex_md5('>.MY[Or/s<?OJC]' + (parseInt(t * 1000)))
-//       } else {
-//           enc = CryptoUtils.hex_md5('>.MY[Or/s<?OJC]' + (parseInt(time * 1000)))
-//       }
+    var logUrl = 'http://mooc.chaoxing.com/multimedia/log';
+    getVideoData();
+    // all code in dist/moocplayer.js
 
+    function sendAjax (param) {
+      $.ajax({type: "GET",url: logUrl,data: param,dataType: "json",success: function(data, textStatus) {
+        // if (data.isPassed) {
+        // }
+      },error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert('服务器出现错误，暂时没法一键学习');
+      }});
+    }
 
-//     var param = {
-//       clazzId: me.data.clazzId,  // ok , url contain this data
-//       clipTime: clipTime, // startTime + '_' + endTime;
-//       duration: me.data.duration, //
-//       isdrag: isdrag, // ok , 1
-//       jobid: me.data.jobid,
-//       objectId: me.data.objectId,
-//       otherInfo: me.data.otherInfo,
-//       playingTime: time,
-//       rt: me.data.rt,
-//       dtype: 'Video',
-//       enc: enc
-//     };
+    var getData = function(){
+      var $jsData = $('#js-video-data');
+      setTimeout(function(){
+        if($jsData.text().length) {
+          // load ok you can do something...
+          var paramsData = $.parseJSON($jsData.text());
+          sendAjax(paramsData);
+        } else {
+          getData();
+        }
+      },300);
+    }
 
-//     $.ajax({type: "GET",url: me.reportUrl,data: param,dataType: "json",success: function(data, textStatus) {
-//             me.logCount = 0;
-//             if (data.isPassed) {
-//                 me.finishJob()
-//             }
-//         },error: function(XMLHttpRequest, textStatus, errorThrown) {
-//             me.logCount += 1;
-//             if (me.logCount >= 3) {
-//                 me.logCount = 0;
-//                 if (Math.floor(XMLHttpRequest.status) >= 500) {
-//                     alert('服务器现在繁忙，不能保证您能否正常完成任务，请您稍后继续...')
-//                 } else {
-//                     alert('您的网络不稳定，请您稍后继续...')
-//                 }
-//             }
-//         }});
-
+    // valid plugin regist
+    var fp = new Fingerprint().get();
+    chrome.storage.local.get( "fp", function (data) {
+      if(fp == data.fp) {
+        // if plugin regist
+        getData();
+        console.log('plugin runed');
+      } else {
+        alert('插件未注册，请在选项页面输入注册码');
+      }
+    });
 
   })();
-
-
-
 
   function getById (id) {
     return document.getElementById(id);
@@ -125,42 +119,16 @@ window.onload = function() {
 
   // get video Data
   function getVideoData () {
-    // console.log(window.MoocPlayers);
-    // At first get video mid
-    // var mid = $('iframe').eq(0).contents().find('iframe').attr('mid');
-    // console.log(mid);
 
-    function  checkFn(fnName){
-      var fn = window[fnName];
-      console.log(window[fnName]);
-      return (fn&&typeof fn != 'undefined') ? true:false;
+    var init = function(){
+      var script = document.createElement('script'),
+          header = document.getElementsByTagName('head')[0];
+      script.type = 'text/javascript';
+      script.src = chrome.extension.getURL('dist/moocplayer.js');
+      header.appendChild(script);
     }
-
-    var loadFn = function(){
-      setTimeout(function(){
-        if(checkFn('jQuery')){
-          console.log('loaed');
-        } else {
-          console.log('unload,checking');
-          loadFn();
-        }
-      },300);
-    }
-    loadFn();
-
-    // return window.MoocPlayers.getVideoData(mid);
-    return 'run ok';
+    init();
   }
-
-  var init = function(){
-    var script = document.createElement('script'),
-        header = document.getElementsByTagName('head')[0];
-    script.type = 'text/javascript';
-    script.src = 'http://demo.itbeihe.com/fe-questions/check-unloaded-function/init.js';
-    header.appendChild(script);
-  }
-
-  init();
 
   window.generCode = function() {
     var code = rc();

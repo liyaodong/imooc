@@ -7,7 +7,7 @@ module.exports = function(grunt) {
           compress: false
         },
         files: {
-          'dist/main.min.js': ['src/js/jquery.min.js', 'src/js/fingerprint.js', 'src/js/aes.js','src/js/moocplayer.js', 'src/js/valid.js']
+          'dist/main.min.js': ['src/js/jquery.min.js', 'src/js/fingerprint.js', 'src/js/aes.js', 'src/js/valid.js']
         }
       }
     },
